@@ -34,7 +34,7 @@ Présentation / Utilisation
 
 Le but de ce plugin est de permettre aux utilisateurs de créer rapidement un cours sans s'occuper des nombreuses options disponibles dans le formulaire de base de Moodle.<br/>
 
-Notre idée étant de choisir en premier lien un type de cours à créer. Par exemple, dans notre cas nous "différencions" des cours "maquette", "formations", "à la carte", etc... Pour chacun de ces types une catégorie de cours où ranger ces cours était spécifiée par défaut.D'autres actions spéficiques à un type peuvent également être mises en place mais ne seront pas présentées dans ce plugin.
+Notre idée étant de choisir en premier lieu le type de cours à créer. Par exemple, dans notre cas nous "différencions" des cours "maquette", "formations", "à la carte", etc... Pour chacun de ces types une catégorie de cours où ranger ces cours était spécifiée par défaut. D'autres actions spéficiques à un type peuvent également être mises en place mais ne seront pas présentées dans ce plugin.
 
 En adaptant quelques peu le plugin, cette sélection peut être supprimée pour que le formulaire ne serve qu'à créer des cours classiques dans n'importe quelle catégorie de cours.
 
@@ -52,10 +52,10 @@ Contient un template mustache présentant l'écran intermédiaire permettant de 
 
 #### `config.php`
 
-Fichier de configuration dans lequel on va définir les catégories de cours relatives à chaque type:
+Fichier de configuration dans lequel on va définir les catégories de cours relatives aux différents types:
 ```php
 <?php
-
+//Types definitions 
 $CFG->static_coursecat_id = array(
     'type1' => 1,
     'type2' => $id_category_1,
@@ -66,7 +66,7 @@ $CFG->static_coursecat_id = array(
 Attention, pour chaque type définit il faudra également ajouter une traduction dans les fichiers du dossier lang/.
 ```php
 <?php
-
+//Traductions
 $string['choice_type:type1'] = 'Libellé du type de cours type1';
 ```
 
@@ -113,18 +113,18 @@ function get_course_types()
 Pour adapter le plugin
 ------
 
-* En utilisant les types de cours
+* En utilisant les types de cours:
 1. Définir les différents types de cours dans le fichier <i>config.php</i> et choisir les catégories de cours correspondantes à chaque type.
 2. Définir l'identifiant de la catégorie de cours où créer vos cours par défault dans le fichier <i>config.php</i>.
 3. Ajouter les différentes traductions correspondantes à ces types de cours.
 4. Adapter la fonction <i>get_course_types()</i> du fichier <i>lib.php</i>.
 5. Modifier le fichier <i>create.php</i> si vous souhaitez ajouter des actions, des tests, etc... en fonction du type choisi (Optionnel).
-6. <strong>Accéder au formulaire via l'url <a href="#">monmoodle.fr/local/uca_create_courses/create.php</a> pour visualiser le formulaire.</strong>
+6. <strong>Accéder au formulaire via l'url <a href="#">monmoodle.fr/local/uca_create_courses/create.php</a>.</strong>
 
 
 * Sans utiliser les types de cours:
 1. Définir l'identifiant de la catégorie de cours où créer vos cours par défault dans le fichier <i>config.php</i>.
-2. <strong>Accéder au formulaire directement via l'url <a href="#">monmoodle.fr/local/uca_create_courses/simplecreate.php</a> pour visualiser le formulaire.</strong>
+2. <strong>Accéder au formulaire directement via l'url <a href="#">monmoodle.fr/local/uca_create_courses/simplecreate.php</a>.</strong>
 
 A propos
 ------
