@@ -24,10 +24,45 @@ Vous pouvez bien sur changer le dossier dans lequel déposer le projet ou le nom
 
 3. Pour l'affichage de l'arbre des catégories présent dans le formulaire nous avons été obligé de modifier quelques éléments du code du core de Moodle dans le fichier course/renderer.php. (Point à améliorer car les modifications peuvent être à refaire en cas de mise à jour de Moodle).<br/>
 (Risque d'avoir ce type de message d'erreur sinon "Erreur de programmation détectée. Ceci doit être corrigé par un programmeur : Unknown method called against theme_boost\output\core\course_renderer :: coursecat_tree").
-  > environ l.1580: faire passer la fonction coursecat_tree() en public<br/><br/>
-    environ l. 1767 et 1771: limite passée à null au lieu de $CFG->courseperpage dans la fonction coursecat_ajax().<br/>
+  
+ * +/- l.1580: faire passer la fonction coursecat_tree() en public<br/><br/>
+  ```php
+  <?php
+ protected function coursecat_tree(coursecat_helper $chelper, $coursecat) { ... }
+ 
+ //A remplacer par 
+ 
+ public function coursecat_tree(coursecat_helper $chelper, $coursecat) { ... }
+  ```
+  
+* +/- l. 1767 et 1771: limite passée à null au lieu de $CFG->courseperpage dans la fonction coursecat_ajax().<br/>
     Si besoin on peut aussi déclarer $CFG->courseperpage = null dans le fichier de config mais cela agira de manière globale sur le moodle (les liens "voir plus" et "voir moins" pour les catégories de cours ne seront du coup plus visibles).<br/><br/>
     <i>* les numéros de lignes indiqués pour les changements sont variables en fonction de la version utilisée.</i>
+    
+```php
+  <?php
+    //contenu de la fonction coursecat_ajax()...
+    $coursedisplayoptions = array(
+        'limit' => $CFG->coursesperpage,
+        'viewmoreurl' => new moodle_url($baseurl, array('browse' => 'courses', 'page' => 1))
+    );
+    $catdisplayoptions = array(
+        'limit' => $CFG->coursesperpage,
+        'viewmoreurl' => new moodle_url($baseurl, array('browse' => 'categories', 'page' => 1))
+    );
+ 
+    //A remplacer par 
+ 
+    //contenu de la fonction coursecat_ajax()...
+    $coursedisplayoptions = array(
+        'limit' => null,
+        'viewmoreurl' => new moodle_url($baseurl, array('browse' => 'courses', 'page' => 1))
+    );
+    $catdisplayoptions = array(
+        'limit' => null,
+        'viewmoreurl' => new moodle_url($baseurl, array('browse' => 'categories', 'page' => 1))
+    );
+  ```
 
 Présentation / Utilisation
 ------
@@ -128,4 +163,4 @@ Pour adapter le plugin
 
 A propos
 ------
-<a href="www.uca.fr">Université Clermont Auvergne</a> - 2018
+<a href="https://www.uca.fr">Université Clermont Auvergne</a> - 2018
