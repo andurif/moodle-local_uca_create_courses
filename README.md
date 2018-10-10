@@ -163,4 +163,4 @@ Pour adapter le plugin
 
 A propos
 ------
-<a href="www.uca.fr">Université Clermont Auvergne</a> - 2018
+<a href="https://www.uca.fr">Université Clermont Auvergne</a> - 2018
