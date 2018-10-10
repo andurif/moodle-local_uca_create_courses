@@ -5,7 +5,7 @@ Projet ayant pour but d'avoir un formulaire de création de cours simplifié per
 Pré-requis
 ------------
 - Moodle en version 3.2 ou plus récente.<br/>
--> Tests effectués sur des versions 3.2, 3.3 et 3.4 et avec une installation basique de moodle (certains ajustements seront peut-être nécessaires en cas d'utilisation de plugins additionnels, notamment pour les formats de cours).
+-> Tests effectués sur des versions 3.2, 3.3, 3.4 et 3.5 et avec une installation basique de moodle (certains ajustements seront peut-être nécessaires en cas d'utilisation de plugins additionnels, notamment pour les formats de cours).
 - Thème qui supporte bootstrap.
 
 Installation basique
@@ -94,9 +94,18 @@ Fichier de configuration dans lequel on va définir les catégories de cours rel
 $CFG->static_coursecat_id = array(
     'type1' => 1,
     'type2' => $id_category_1,
-    'type3' => $id_category_1,
+    'type3' => $id_category_2,
     'etc..' => $x,
 );
+
+// ! Nouveauté version 2018101000 !
+$CFG->static_types = array(
+    'type1'     => array('default_category_id' => 1, 'icon' => null, 'in_form' => false),
+    'type2'     => array('default_category_id' => $id_category_1, 'icon' => 'group', 'in_form' => true),
+    'type3'      => array('default_category_id' => $id_category_2, 'icon' => 'assignment', 'in_form' => true),
+    'etc..'     => array('default_category_id' => $x, 'icon' => 'class', 'in_form' => true),
+);
+
 ```
 Attention, pour chaque type définit il faudra également ajouter une traduction dans les fichiers du dossier lang/.
 ```php
@@ -145,14 +154,42 @@ function get_course_types()
 }
 ```
 
+<i><b>! Nouveauté version 2018101000 !</b></i>
+
+La nouvelle version du plugin modifie quelques peu cette fonction <i>get_course_types()</i> pour apporter davantage de flexibilité en déportant une partie de la logique dans le fichier de configuration. <br/><br/>
+Ainsi vous pourrez définir directement au niveau de la variable $CFG->static_types (cf. doc config.php du dessus) la valeur de la catégorie de cours liée et l'icône à afficher pour chaque type. Un booléen <i>in_form</i> a également été ajouté pour indiquer si le type doit être utilisé dans le formulaire ou non.<br/>
+Au niveau de la fonction le traitement sera plus automatisé et vous n'aurez en fait qu'à adapter le fichier de configuration en fonction du besoin (les urls seront cela toujours à modifier au niveau du fichier lib.php en cas de changement dans la structure de votre projet moodle).
+```php
+
+<?php
+function get_course_types()
+{
+    //In this example we the array defined in the config.php file
+    global $CFG;
+    $tabl = [];
+
+    foreach ($CFG->static_types as $key => $type) {
+        if($type['in_form']) {
+            $tabl[] = [
+                'name'  => get_string('choice_type:' . $key, 'local_uca_create_courses'),
+                'url'   => new moodle_url('/local/uca_create_courses/create.php', array('type' => $key)),
+                'icon'  => $type['icon']
+            ];
+        }
+    }
+
+    return $tabl;
+}
+```
+
 Pour adapter le plugin
 ------
 
 * En utilisant les types de cours
-1. Définir les différents types de cours dans le fichier <i>config.php</i> et choisir les catégories de cours correspondantes à chaque type.
+1. Définir les différents types de cours dans le fichier <i>config.php</i>, choisir les catégories de cours et les éventuelles icônes correspondantes à chaque type.
 2. Définir l'identifiant de la catégorie de cours où créer vos cours par défault dans le fichier <i>config.php</i>.
 3. Ajouter les différentes traductions correspondantes à ces types de cours.
-4. Adapter la fonction <i>get_course_types()</i> du fichier <i>lib.php</i>.
+4. Adapter la fonction <i>get_course_types()</i> du fichier <i>lib.php</i> (Optionnel avec la version 2018101000).
 5. Modifier le fichier <i>create.php</i> si vous souhaitez ajouter des actions, des tests, etc... en fonction du type choisi (Optionnel).
 6. <strong>Accéder au formulaire via l'url <a href="#">monmoodle.fr/local/uca_create_courses/create.php</a> pour visualiser le formulaire.</strong>
 
