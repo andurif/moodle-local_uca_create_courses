@@ -7,7 +7,7 @@
         display: table-cell;
         width: 1%;
     }
-    .btn-group-justified {
+    .btn-outline-dark {
         margin-top: 30px;
     }
     .material-icons {
@@ -16,15 +16,15 @@
 </style>
 <div class="container select_type">
     <h1>{{#str}}addnewcourse, moodle{{/str}}</h1>
-    <div class="justify-content-center col-10">
-        <div class="btn-group btn-group-justified" role="group">
-            <a href='{{{url_all}}}' class="btn btn-default">{{#str}}choice_type:all, local_uca_create_courses{{/str}}</a>
-            <a href='#' class="btn btn-default create_other">{{#str}}choice_type:other, local_uca_create_courses{{/str}}</a>
+    <div class="justify-content-center">
+        <div class="btn-group" role="group">
+            <a href='{{{url_all}}}' class="btn btn-outline-dark">{{#str}}choice_type:all, local_uca_create_courses{{/str}}</a>
+            <a href='#' class="btn btn-outline-dark create_other">{{#str}}choice_type:other, local_uca_create_courses{{/str}}</a>
         </div>
-
-        <div class="btn-group btn-group-justified others_types" role="group">
+        <hr/>
+        <div class="btn-group others_types" role="group">
             {{#types}}
-                <a href='{{{url}}}' class="btn btn-default"><i class="material-icons">{{{icon}}}</i> <br/>{{{name}}}</a>
+                <a href='{{{url}}}' class="btn btn-outline-dark"><i class="material-icons">{{{icon}}}</i> <br/>{{{name}}}</a>
             {{/types}}
         </div>
     </div>

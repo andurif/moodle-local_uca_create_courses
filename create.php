@@ -35,6 +35,7 @@ require_login();
 $system_ctx = context::instance_by_id(5);
 require_capability('moodle/course:create', $system_ctx); //check if we can create a course in the system context
 
+$PAGE->set_context($system_ctx);
 $PAGE->set_pagelayout('standard');
 $PAGE->set_url(new moodle_url('/local/uca_create_courses/create.php'));
 $PAGE->set_title(get_string('addnewcourse'));
@@ -77,26 +78,30 @@ if($type) {
                 $catcontext = context_coursecat::instance($datas->category);
                 require_capability('moodle/course:create', $catcontext);
 
-                $datas->startdate = time();
-                if($datas->format == "social") {
+		//Aditionnal potential tests in function of course type
+                $formats = get_sorted_course_formats(true);
+                if(in_array("social", $formats) && $datas->format == "social") {
                     $datas->numdiscussions = $datas->numsections;
                     unset($datas->numsections);
                     unset($datas->activityttype);
                 }
-                if($datas->format == "singleactivity") {
+                if(in_array("singleactivity", $formats) && $datas->format == "singleactivity") {
                     unset($datas->numsections);
                 }
                 else {
                     unset($datas->activityttype);
                 }
+
+                $datas->startdate = time();
                 $course = create_course($datas); //course creation
                 $coursecontext = context_course::instance($course->id);
 
                 //We automatically give the manager role (or the role defined when we create a course) for the current user in order to he can manage the new course.
+		//And we also check if the user has enrol rights
                 //Optionnal
                 enrol_try_internal_enrol($course->id, $USER->id, $CFG->creatornewroleid);
-
                 require_capability('enrol/manual:enrol', $coursecontext);
+
                 //Redirect to course page
                 redirect(new moodle_url('/course/view.php', array('id' => $course->id)));
             }

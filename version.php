@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2018050500;
+$plugin->version   = 2018101000;
 $plugin->requires  = 2017051500;
 $plugin->cron      = 0;
 $plugin->component = 'local_uca_create_courses';

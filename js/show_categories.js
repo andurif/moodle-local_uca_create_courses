@@ -4,8 +4,8 @@ $(document).ready(
         checkFormat();
         $("#id_category").hide();
         $("#tree_div").hide();
-        var selected_cat_html = $("#tree_div").attr('data-select-label')+"<span id='selected_category' style='font-weight: bold'>"+$("#tree_div").attr('data-default-name')+"</span>";
-        $("#id_category").parents(".felement").html(selected_cat_html+$("#tree_div").html()+$("#id_category").parents(".felement").html());
+        var selected_cat_html = "<div class='row col-md-12'>" + $("#tree_div").attr('data-select-label')+"<span id='selected_category' style='font-weight: bold'> "+$("#tree_div").attr('data-default-name')+"</span></div><br/>";
+        $("#id_category").parents(".felement").html(selected_cat_html+"<div class='col-12'>"+$("#tree_div").html()+"</div>"+$("#id_category").parents(".felement").html());
 
         //Selection of a category
         $('.course_category_tree').on('click', '.content a',function(e){

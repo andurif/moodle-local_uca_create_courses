@@ -30,11 +30,11 @@
  */
 function get_default_category_form($type = null)
 {
-    global $DB, $CFG;
+    global $CFG;
 
     //We search the category which corresponds to the given type
-    if(in_array($type, array_keys($CFG->static_coursecat_id))) {
-        return coursecat::get($CFG->static_coursecat_id[$type]);
+    if(in_array($type, array_keys($CFG->static_types))) {
+        return coursecat::get($CFG->static_types[$type]['default_category_id']);
     }
 
     //By default we return the category with the id added in config (most of the time 1, the automatically created category)
@@ -69,27 +69,19 @@ function categories_list($renderer, $category) {
  */
 function get_course_types()
 {
-    //In this example we use 4 types of courses
-    return [
-        [
-            'name'  => get_string('choice_type:collab', 'local_uca_create_courses'),
-            'url'   => new moodle_url('/local/uca_create_courses/create.php', array('type' => 'collab')),
-            'icon'  => 'group'
-        ],
-        [
-            'name'  => get_string('choice_type:carte', 'local_uca_create_courses'),
-            'url'   => new moodle_url('/local/uca_create_courses/create.php', array('type' => 'carte')),
-            'icon'  => 'storage'
-        ],
-        [
-            'name'  => get_string('choice_type:form', 'local_uca_create_courses'),
-            'url'   => new moodle_url('/local/uca_create_courses/create.php', array('type' => 'form')),
-            'icon'  => 'assignment'
-        ],
-        [
-            'name'  => get_string('choice_type:sandbox', 'local_uca_create_courses'),
-            'url'   => new moodle_url('/local/uca_create_courses/create.php', array('type' => 'sandbox')),
-            'icon'  => 'delete'
-        ]
-    ];
+    //In this example we the array defined in the config.php file
+    global $CFG;
+    $tabl = [];
+
+    foreach ($CFG->static_types as $key => $type) {
+        if($type['in_form']) {
+            $tabl[] = [
+                'name'  => get_string('choice_type:' . $key, 'local_uca_create_courses'),
+                'url'   => new moodle_url('/local/uca_create_courses/create.php', array('type' => $key)),
+                'icon'  => $type['icon']
+            ];
+        }
+    }
+
+    return $tabl;
 }
