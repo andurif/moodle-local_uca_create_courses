@@ -20,13 +20,12 @@
  * Custom form made to simplify the creation of a moodle course.
  *
  * @package    local_uca_create_courses
- * @author     Université Clermont Auvergne, Anthony Durif
+ * @author     Université Clermont Auvergne - Anthony Durif
  * @copyright  2018 Université Clermont Auvergne
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 require_once("$CFG->libdir/formslib.php");
-require_once($CFG->libdir. '/coursecatlib.php');
 
 /**
  * Course creation custom form.
@@ -34,7 +33,6 @@ require_once($CFG->libdir. '/coursecatlib.php');
  * Custom form made to simplify the creation of a moodle course.
  *
  * @package    local_uca_create_courses
- * @author     Université Clermont Auvergne, Anthony Durif
  * @copyright  2018 Université Clermont Auvergne
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -62,12 +60,14 @@ class creation_form extends moodleform
         $mform->addHelpButton('visible', 'visible');
         $mform->setDefault('visible', '1');
 
-        $displaylist = coursecat::make_categories_list('moodle/course:create');
+        $displaylist = core_course_category::make_categories_list('moodle/course:create');
         $mform->addElement('select', 'category', get_string('coursecategory'), $displaylist);
-        $mform->addHelpButton('category', 'coursecategory');
+        $mform->addHelpButton('category', 'coursecategory', 'local_uca_create_courses');
         $mform->setDefault('category', $this->_customdata['default_category']->id);
         $mform->addElement('html', '<div id="tree_div" data-select-label="'.get_string('selected_category', 'local_uca_create_courses').'" 
-                                        data-default-name="'.$this->_customdata['default_category']->name.'">'.$this->_customdata['tree'].'</div>');
+                                        data-default-name="'.$this->_customdata['default_category']->name.'">
+                                        <a href="#" id="select_default_category" class="pull-right span4" >'.get_string('select_default_category', 'local_uca_create_courses').'</a><br/><hr/>
+                                        '.$this->_customdata['tree'].'</div>');
 
         $mform->addElement('header', 'courseformathdr', get_string('type_format', 'plugin'));
 
@@ -88,10 +88,12 @@ class creation_form extends moodleform
         }
         $mform->addElement('select', 'activitytype', get_string('activitytype', 'format_singleactivity'), $activities);
         $mform->addHelpButton('activitytype', 'activitytype', 'format_singleactivity');
+        $mform->hideIf('activitytype', 'format', 'neq', 'singleactivity');
 
         $nbsections = range(0, $courseconfig->maxsections);
         $mform->addElement('select', 'numsections', get_string('numberweeks'), $nbsections);
         $mform->setDefault('numsections', $courseconfig->numsections);
+        $mform->hideIf('numsections', 'format', 'eq', 'singleactivity');
 
         $this->add_action_buttons();
     }

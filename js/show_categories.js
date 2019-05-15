@@ -1,7 +1,13 @@
+/**
+ *
+ * @package    local_uca_create_courses
+ * @author     Université Clermont Auvergne - Anthony Durif
+ * @copyright  2019 Université Clermont Auvergne
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 $(document).ready(
     function ()
     {
-        checkFormat();
         $("#id_category").hide();
         $("#tree_div").hide();
         var selected_cat_html = "<div class='row col-md-12'>" + $("#tree_div").attr('data-select-label')+"<span id='selected_category' style='font-weight: bold'> "+$("#tree_div").attr('data-default-name')+"</span></div><br/>";
@@ -33,25 +39,14 @@ $(document).ready(
                 // $(this).click();
                 $(this).removeClass('bold');
             });
-            var default_name = $(this).attr('data-default-name');
-            $("#id_category").val($(this).attr('data-default-id'));
+            var default_name = $("#tree_div").attr('data-default-name');
+            $("#id_category").val($("#tree_div").attr('data-default-id'));
             $("#selected_category").text(default_name);
-        });
+            var def_cat = $('a:visible:contains("' + default_name + '")');
+            if(def_cat.length > 0) {
+                def_cat.first().addClass('bold');
+            }
 
-        $('#id_format').change(checkFormat);
+        });
     }
 );
-
-/**
- * Display of fields in fonction of the chosen format
- */
-function checkFormat() {
-    if($('#id_format').val() == "singleactivity") {
-        $('#id_activitytype').closest('.fitem').show();
-        $('#id_numsections').closest('.fitem').hide();
-    }
-    else {
-        $('#id_activitytype').closest('.fitem').hide();
-        $('#id_numsections').closest('.fitem').show();
-    }
-}

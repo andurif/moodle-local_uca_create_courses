@@ -32,7 +32,7 @@ require_once('lib.php');
 $type = optional_param('type', null, PARAM_ALPHANUMEXT);
 
 require_login();
-$system_ctx = context::instance_by_id(5);
+$system_ctx = context_system::instance();
 require_capability('moodle/course:create', $system_ctx); //check if we can create a course in the system context
 
 $PAGE->set_context($system_ctx);
@@ -42,7 +42,7 @@ $PAGE->set_title(get_string('addnewcourse'));
 $PAGE->set_heading(get_string('addnewcourse'));
 $PAGE->navbar->add(get_string('administrationsite'));
 $PAGE->navbar->add(get_string('course'));
-$PAGE->navbar->add(get_string('categoriesandcoures'), new moodle_url('/course/management.php'));
+$PAGE->navbar->add(get_string('coursecatmanagement'), new moodle_url('/course/management.php'));
 $PAGE->navbar->add(get_string('addnewcourse'));
 
 $PAGE->requires->jquery();
@@ -60,8 +60,8 @@ if($type) {
     $tree = categories_list($courserenderer, $category_def->id);
 
     $submit_url = new moodle_url('/local/uca_create_courses/create.php', array('type' => $type));
+    $category_def = ($category_def->id == 0) ? core_course_category::get($CFG->default_category) : $category_def;
     $form = new creation_form($submit_url, array('tree' => $tree, 'default_category' => $category_def));
-    echo $OUTPUT->header();
 
     if ($form->is_cancelled()) {
         //Cancel
@@ -78,7 +78,7 @@ if($type) {
                 $catcontext = context_coursecat::instance($datas->category);
                 require_capability('moodle/course:create', $catcontext);
 
-		//Aditionnal potential tests in function of course type
+		        //Aditionnal potential tests in function of course type
                 $formats = get_sorted_course_formats(true);
                 if(in_array("social", $formats) && $datas->format == "social") {
                     $datas->numdiscussions = $datas->numsections;
@@ -87,8 +87,7 @@ if($type) {
                 }
                 if(in_array("singleactivity", $formats) && $datas->format == "singleactivity") {
                     unset($datas->numsections);
-                }
-                else {
+                } else {
                     unset($datas->activityttype);
                 }
 
@@ -97,7 +96,7 @@ if($type) {
                 $coursecontext = context_course::instance($course->id);
 
                 //We automatically give the manager role (or the role defined when we create a course) for the current user in order to he can manage the new course.
-		//And we also check if the user has enrol rights
+		        //And we also check if the user has enrol rights
                 //Optionnal
                 enrol_try_internal_enrol($course->id, $USER->id, $CFG->creatornewroleid);
                 require_capability('enrol/manual:enrol', $coursecontext);
@@ -107,11 +106,11 @@ if($type) {
             }
         } else {
             //Form display
+            echo $OUTPUT->header();
             $form->display();
         }
     }
-}
-else {
+} else {
     //Display the page which permits to create the course type
     $renderer = new core_renderer($PAGE, null);
 

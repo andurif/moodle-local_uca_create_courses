@@ -35,3 +35,8 @@ $string['choice_type:other'] = 'Create another type of course';
 $string['main_enrol_method'] = 'Main enrol method';
 $string['enrolkey_method'] = 'Self enrolment with enrolment key';
 $string['selected_category'] = 'Selected course category: ';
+$string['select_default_category'] = 'Select the default course category';
+$string['coursecategory'] = 'Course category';
+$string['coursecategory_help'] = 'This setting determines the category in which the course will appear in the list of courses.<br/>
+                            Click on the category name to select it as category for your new course.';
+$string['privacy:metadata'] = 'This local plugin does not store or transmit any personal data.';

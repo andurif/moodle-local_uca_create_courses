@@ -1,0 +1,14 @@
+This file describes changes for the plugin.
+
+=== v3.6.3-r1 ===
+
+* Implementation of new privacy API to become GDPR compliant.
+* Class coursecat is now alias to autoloaded class core_course_category and some functions are now deprecated: use of core_course_category class instead.
+* Add the ability to select the default course category.
+* Use of font-awesome instead of material design.
+* Moving some logic in the form class to simplify javascript file.
+* Fixed: display of the default course category's name if creation without type.
+
+=== v3.4.1-r1 ===
+
+* First version of the plugin.

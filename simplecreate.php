@@ -30,7 +30,7 @@ require_once('creation_form.php');
 require_once('lib.php');
 
 require_login();
-$system_ctx = context::instance_by_id(5);
+$system_ctx = context_system::instance();
 require_capability('moodle/course:create', $system_ctx); //check if we can create a course in the system context
 
 $PAGE->set_context($system_ctx);
@@ -40,7 +40,7 @@ $PAGE->set_title(get_string('addnewcourse'));
 $PAGE->set_heading(get_string('addnewcourse'));
 $PAGE->navbar->add(get_string('administrationsite'));
 $PAGE->navbar->add(get_string('course'));
-$PAGE->navbar->add(get_string('categoriesandcoures'), new moodle_url('/course/management.php'));
+$PAGE->navbar->add(get_string('coursecatmanagement'), new moodle_url('/course/management.php'));
 $PAGE->navbar->add(get_string('addnewcourse'));
 
 $PAGE->requires->jquery();
@@ -52,14 +52,12 @@ $tree = categories_list($courserenderer, null);
 
 $submit_url = new moodle_url('/local/uca_create_courses/simplecreate.php');
 $form = new creation_form($submit_url, array('tree' => $tree, 'default_category' => $category_def));
-echo $OUTPUT->header();
 
 if ($form->is_cancelled()) {
     //Cancel
     redirect(new moodle_url('/local/uca_create_courses/simplecreate.php'));
     exit;
-}
-else {
+} else {
     if ($datas = $form->get_data()) {
         //Form process
         if ($datas->submitbutton) {
@@ -79,8 +77,7 @@ else {
             }
             if(in_array("singleactivity", $formats) && $datas->format == "singleactivity") {
                 unset($datas->numsections);
-            }
-            else {
+            } else {
                 unset($datas->activityttype);
             }
 
@@ -97,9 +94,9 @@ else {
             //Redirect to course page
             redirect(new moodle_url('/course/view.php', array('id' => $course->id)));
         }
-    }
-    else {
+    } else {
         //Form display
+        echo $OUTPUT->header();
         $form->display();
     }
 }

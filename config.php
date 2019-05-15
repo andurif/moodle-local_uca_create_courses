@@ -35,10 +35,10 @@ $CFG->static_coursecat_id = array(
 
 $CFG->static_types = array(
     'all'       => array('default_category_id' => null, 'icon' => null, 'in_form' => false),
-    'collab'    => array('default_category_id' => 2, 'icon' => 'group', 'in_form' => true),
-    'form'      => array('default_category_id' => 3, 'icon' => 'assignment', 'in_form' => true),
-    'carte'     => array('default_category_id' => 4, 'icon' => 'dvr', 'in_form' => true),
-    'sandbox'   => array('default_category_id' => 1, 'icon' => 'delete', 'in_form' => true),
+    'collab'    => array('default_category_id' => 2, 'icon' => 'users', 'in_form' => true),
+    'form'      => array('default_category_id' => 3, 'icon' => 'book', 'in_form' => true),
+    'carte'     => array('default_category_id' => 4, 'icon' => 'laptop', 'in_form' => true),
+    'sandbox'   => array('default_category_id' => 1, 'icon' => 'trash', 'in_form' => true),
 );
 
 $CFG->default_category = 1;

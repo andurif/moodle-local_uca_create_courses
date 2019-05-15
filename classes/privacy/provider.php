@@ -15,18 +15,33 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin version informations.
+ * Privacy Subsystem implementation for local_uca_create_courses.
  *
  * @package    local_uca_create_courses
  * @author     Université Clermont Auvergne - Anthony Durif
- * @copyright  2018 Université Clermont Auvergne
+ * @copyright  2019 Université Clermont Auvergne
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace local_uca_create_courses\privacy;
+
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2019051000;
-$plugin->requires  = 2017051500;
-$plugin->cron      = 0;
-$plugin->component = 'local_uca_create_courses';
-$plugin->release   = 'v3.6.3-r1';
+/**
+ * Privacy Subsystem for local_uca_create_courses implementing null_provider.
+ *
+ * @copyright  2019 Université Clermont Auvergne
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class provider implements \core_privacy\local\metadata\null_provider {
+
+    /**
+     * Get the language string identifier with the component's language
+     * file to explain why this plugin stores no data.
+     *
+     * @return  string
+     */
+    public static function get_reason() : string {
+        return 'privacy:metadata';
+    }
+}

@@ -33,12 +33,12 @@ function get_default_category_form($type = null)
     global $CFG;
 
     //We search the category which corresponds to the given type
-    if(in_array($type, array_keys($CFG->static_types))) {
-        return coursecat::get($CFG->static_types[$type]['default_category_id']);
+    if(in_array($type, array_keys($CFG->static_types)) ) {
+        return core_course_category::get($CFG->static_types[$type]['default_category_id']);
     }
 
     //By default we return the category with the id added in config (most of the time 1, the automatically created category)
-    return coursecat::get($CFG->default_category);
+    return core_course_category::get($CFG->default_category);
 }
 
 /**
@@ -47,10 +47,8 @@ function get_default_category_form($type = null)
  * @param int|stdClass|coursecat $category the course category.
  * @return string the html which corresponds to the tree.
  */
-function categories_list($renderer, $category) {
-    global $CFG;
-    require_once($CFG->libdir. '/coursecatlib.php');
-
+function categories_list($renderer, $category)
+{
     $chelper = new coursecat_helper();
 
     // Prepare parameters for courses and categories lists in the tree
@@ -58,7 +56,7 @@ function categories_list($renderer, $category) {
         ->set_attributes(array('class' => 'category-browse category-browse-'.$category))
         ->set_categories_display_options(array('visible' => true));
 
-    return $renderer->coursecat_tree($chelper, coursecat::get($category));
+    return $renderer->coursecat_tree($chelper, core_course_category::get($category));
 }
 
 /**

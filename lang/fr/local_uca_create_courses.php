@@ -35,3 +35,8 @@ $string['choice_type:other'] = 'Créer un autre type d\'espace';
 $string['main_enrol_method'] = 'Méthode d\'inscription principale';
 $string['enrolkey_method'] = 'Auto-inscription avec clef d\'inscription';
 $string['selected_category'] = 'Emplacement actuel du cours: ';
+$string['select_default_category'] = 'Selectionner la catégorie par défaut';
+$string['coursecategory'] = 'Catégorie de cours';
+$string['coursecategory_help'] = 'Ce réglage détermine la catégorie dans laquelle le cours apparaîtra dans la liste des cours.<br/>
+                            Cliquez sur le nom de la catégorie de cours pour la sélectionner pour votre nouveau cours.';
+$string['privacy:metadata'] = 'Le plugin local de création de cours custom n\'enregistre aucune donnée personnelle.';
