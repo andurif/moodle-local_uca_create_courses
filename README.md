@@ -5,7 +5,7 @@ Projet ayant pour but d'avoir un formulaire de création de cours simplifié per
 Pré-requis
 ------------
 - Moodle en version 3.2 ou plus récente.<br/>
--> Tests effectués sur des versions 3.2, 3.3, 3.4 et 3.5 et avec une installation basique de moodle (certains ajustements seront peut-être nécessaires en cas d'utilisation de plugins additionnels, notamment pour les formats de cours).
+-> Tests effectués sur des versions 3.2 à 3.9 et avec une installation basique de moodle (certains ajustements seront peut-être nécessaires en cas d'utilisation de plugins additionnels, notamment pour les formats de cours).
 - Thème qui supporte bootstrap.
 
 Installation basique
@@ -111,7 +111,7 @@ Attention, pour chaque type définit il faudra également ajouter une traduction
 ```php
 <?php
 
-$string['choice_type:type1'] = 'Libellé du type de cours type1';
+$string['choice_type_type1'] = 'Libellé du type de cours type1';
 ```
 
 #### `create.php et simplecreate.php` 
@@ -139,13 +139,13 @@ function get_course_types()
     return [
         //type1
         [
-            'name'  => get_string('choice_type:type1', 'local_uca_create_courses'),
+            'name'  => get_string('choice_type_type1', 'local_uca_create_courses'),
             'url'   => new moodle_url('/local/uca_create_courses/create.php', array('type' => 'type1')),
             'icon'  => 'group'
         ],
         //type2
         [
-            'name'  => get_string('choice_type:type2', 'local_uca_create_courses'),
+            'name'  => get_string('choice_type_type2', 'local_uca_create_courses'),
             'url'   => new moodle_url('/local/uca_create_courses/create.php', array('type' => 'type2')),
             'icon'  => 'storage'
         ],
@@ -171,7 +171,7 @@ function get_course_types()
     foreach ($CFG->static_types as $key => $type) {
         if($type['in_form']) {
             $tabl[] = [
-                'name'  => get_string('choice_type:' . $key, 'local_uca_create_courses'),
+                'name'  => get_string('choice_type_' . $key, 'local_uca_create_courses'),
                 'url'   => new moodle_url('/local/uca_create_courses/create.php', array('type' => $key)),
                 'icon'  => $type['icon']
             ];

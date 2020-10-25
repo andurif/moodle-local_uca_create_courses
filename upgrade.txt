@@ -1,5 +1,8 @@
 This file describes changes for the plugin.
 
+=== v3.9-r1 ===
+* Update translations
+
 === v3.6.3-r1 ===
 
 * Implementation of new privacy API to become GDPR compliant.

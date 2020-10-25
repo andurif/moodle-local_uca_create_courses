@@ -24,14 +24,14 @@
  */
 
 $string['pluginname'] = 'Formulaire de création de cours custom';
-$string['choice_type:collab'] = 'Espace collaboratif';
-$string['choice_type:carte'] = 'Espace de cours <br/>à la carte';
-$string['choice_type:forco'] = 'Espace pour la formation <br/>continue';
-$string['choice_type:form'] = 'Espace pour la formation<br/> des personnels';
-$string['choice_type:ead'] = 'Espace pour l\'enseignement <br/>à distance';
-$string['choice_type:sandbox'] = 'Bac à sable';
-$string['choice_type:all'] = 'Créer un espace de cours classique';
-$string['choice_type:other'] = 'Créer un autre type d\'espace';
+$string['choice_type_collab'] = 'Espace collaboratif';
+$string['choice_type_carte'] = 'Espace de cours <br/>à la carte';
+$string['choice_type_forco'] = 'Espace pour la formation <br/>continue';
+$string['choice_type_form'] = 'Espace pour la formation<br/> des personnels';
+$string['choice_type_ead'] = 'Espace pour l\'enseignement <br/>à distance';
+$string['choice_type_sandbox'] = 'Bac à sable';
+$string['choice_type_all'] = 'Créer un espace de cours classique';
+$string['choice_type_other'] = 'Créer un autre type d\'espace';
 $string['main_enrol_method'] = 'Méthode d\'inscription principale';
 $string['enrolkey_method'] = 'Auto-inscription avec clef d\'inscription';
 $string['selected_category'] = 'Emplacement actuel du cours: ';

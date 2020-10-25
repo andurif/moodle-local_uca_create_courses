@@ -18,8 +18,8 @@
     <h1>{{#str}}addnewcourse, moodle{{/str}}</h1>
     <div class="justify-content-center">
         <div class="btn-group" role="group">
-            <a href='{{{url_all}}}' class="btn btn-outline-dark">{{#str}}choice_type:all, local_uca_create_courses{{/str}}</a>
-            <a href='#' class="btn btn-outline-dark create_other">{{#str}}choice_type:other, local_uca_create_courses{{/str}}</a>
+            <a href='{{{url_all}}}' class="btn btn-outline-dark">{{#str}}choice_type_all, local_uca_create_courses{{/str}}</a>
+            <a href='#' class="btn btn-outline-dark create_other">{{#str}}choice_type_other, local_uca_create_courses{{/str}}</a>
         </div>
         <hr/>
         <div class="btn-group others_types" role="group">
@@ -32,7 +32,7 @@
 
 <script>
     $(document).ready(function () {
-        //We show the "others types" if this option is chosen.
+        // We show the "others types" if this option is chosen.
         $('.others_types').hide();
         $('.create_other').click(function () {
             $('.others_types').show();

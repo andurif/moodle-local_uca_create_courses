@@ -54,12 +54,12 @@ $submit_url = new moodle_url('/local/uca_create_courses/simplecreate.php');
 $form = new creation_form($submit_url, array('tree' => $tree, 'default_category' => $category_def));
 
 if ($form->is_cancelled()) {
-    //Cancel
+    // Cancel.
     redirect(new moodle_url('/local/uca_create_courses/simplecreate.php'));
     exit;
 } else {
     if ($datas = $form->get_data()) {
-        //Form process
+        // Form process.
         if ($datas->submitbutton) {
 //            $editoroptions = array('maxfiles' => EDITOR_UNLIMITED_FILES, 'maxbytes' => $CFG->maxbytes, 'trusttext' => false, 'noclean' => true);
 //            $editoroptions['context'] = $system_ctx;
@@ -68,14 +68,14 @@ if ($form->is_cancelled()) {
             $catcontext = context_coursecat::instance($datas->category);
             require_capability('moodle/course:create', $catcontext);
 
-            //Aditionnal potential tests in function of course type
+            // Additionnal potential tests in function of course type.
             $formats = get_sorted_course_formats(true);
-            if(in_array("social", $formats) && $datas->format == "social") {
+            if (in_array("social", $formats) && $datas->format == "social") {
                 $datas->numdiscussions = $datas->numsections;
                 unset($datas->numsections);
                 unset($datas->activityttype);
             }
-            if(in_array("singleactivity", $formats) && $datas->format == "singleactivity") {
+            if (in_array("singleactivity", $formats) && $datas->format == "singleactivity") {
                 unset($datas->numsections);
             } else {
                 unset($datas->activityttype);
@@ -85,17 +85,17 @@ if ($form->is_cancelled()) {
             $course = create_course($datas); //course creation
             $coursecontext = context_course::instance($course->id);
 
-            //We automatically give the manager role (or the role defined when we create a course) for the current user in order to he can manage the new course.
-            //And we also check if the user has enrol rights
-            //Optionnal
+            // We automatically give the manager role (or the role defined when we create a course) for the current user in order to he can manage the new course.
+            // And we also check if the user has enrol rights.
+            // Optionnal.
             enrol_try_internal_enrol($course->id, $USER->id, $CFG->creatornewroleid);
             require_capability('enrol/manual:enrol', $coursecontext);
 
-            //Redirect to course page
+            // Redirect to course page.
             redirect(new moodle_url('/course/view.php', array('id' => $course->id)));
         }
     } else {
-        //Form display
+        // Form display.
         echo $OUTPUT->header();
         $form->display();
     }

@@ -74,7 +74,7 @@ function get_course_types()
     foreach ($CFG->static_types as $key => $type) {
         if($type['in_form']) {
             $tabl[] = [
-                'name'  => get_string('choice_type:' . $key, 'local_uca_create_courses'),
+                'name'  => get_string('choice_type_' . $key, 'local_uca_create_courses'),
                 'url'   => new moodle_url('/local/uca_create_courses/create.php', array('type' => $key)),
                 'icon'  => $type['icon']
             ];

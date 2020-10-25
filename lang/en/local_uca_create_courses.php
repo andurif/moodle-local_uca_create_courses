@@ -24,14 +24,14 @@
  */
 
 $string['pluginname'] = 'Custom course cration form';
-$string['choice_type:collab'] = 'Collaborative course';
-$string['choice_type:carte'] = 'Optionnal <br/>course';
-$string['choice_type:forco'] = 'ForCo <br/>course';
-$string['choice_type:form'] = 'Course for employees\'<br/> formation';
-$string['choice_type:ead'] = 'Distance learning <br/>course';
-$string['choice_type:sandbox'] = 'Sandbox';
-$string['choice_type:all'] = 'Create a classic course';
-$string['choice_type:other'] = 'Create another type of course';
+$string['choice_type_collab'] = 'Collaborative course';
+$string['choice_type_carte'] = 'Optionnal <br/>course';
+$string['choice_type_forco'] = 'ForCo <br/>course';
+$string['choice_type_form'] = 'Course for employees\'<br/> formation';
+$string['choice_type_ead'] = 'Distance learning <br/>course';
+$string['choice_type_sandbox'] = 'Sandbox';
+$string['choice_type_all'] = 'Create a classic course';
+$string['choice_type_other'] = 'Create another type of course';
 $string['main_enrol_method'] = 'Main enrol method';
 $string['enrolkey_method'] = 'Self enrolment with enrolment key';
 $string['selected_category'] = 'Selected course category: ';
