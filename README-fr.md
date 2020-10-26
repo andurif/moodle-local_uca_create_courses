@@ -25,7 +25,7 @@ Vous pouvez bien sur changer le dossier dans lequel déposer le projet ou le nom
 3. Pour l'affichage de l'arbre des catégories présent dans le formulaire nous avons été obligé de modifier quelques éléments du code du core de Moodle dans le fichier course/renderer.php. (Point à améliorer car les modifications peuvent être à refaire en cas de mise à jour de Moodle).<br/>
 (Risque d'avoir ce type de message d'erreur sinon "Erreur de programmation détectée. Ceci doit être corrigé par un programmeur : Unknown method called against theme_boost\output\core\course_renderer :: coursecat_tree").
   
- * +/- l.1580: faire passer la fonction coursecat_tree() en public<br/><br/>
+ * +/- l.1670: faire passer la fonction coursecat_tree() en public<br/><br/>
   ```php
   <?php
  protected function coursecat_tree(coursecat_helper $chelper, $coursecat) { ... }
@@ -35,7 +35,7 @@ Vous pouvez bien sur changer le dossier dans lequel déposer le projet ou le nom
  public function coursecat_tree(coursecat_helper $chelper, $coursecat) { ... }
   ```
   
-* +/- l. 1767 et 1771: limite passée à null au lieu de $CFG->courseperpage dans la fonction coursecat_ajax().<br/>
+* +/- l. 1857 et 1862: limite passée à null au lieu de $CFG->courseperpage dans la fonction coursecat_ajax().<br/>
     Si besoin on peut aussi déclarer $CFG->courseperpage = null dans le fichier de config mais cela agira de manière globale sur le moodle (les liens "voir plus" et "voir moins" pour les catégories de cours ne seront du coup plus visibles).<br/><br/>
     <i>* les numéros de lignes indiqués pour les changements sont variables en fonction de la version utilisée.</i>
     
@@ -69,7 +69,7 @@ Présentation / Utilisation
 
 Le but de ce plugin est de permettre aux utilisateurs de créer rapidement un cours sans s'occuper des nombreuses options disponibles dans le formulaire de base de Moodle.<br/>
 
-Notre idée étant de choisir en premier lien un type de cours à créer. Par exemple, dans notre cas nous "différencions" des cours "maquette", "formations", "à la carte", etc... Pour chacun de ces types une catégorie de cours où ranger ces cours était spécifiée par défaut.D'autres actions spéficiques à un type peuvent également être mises en place mais ne seront pas présentées dans ce plugin.
+Notre idée étant de choisir en premier lieu un type de cours à créer. Par exemple, dans notre cas nous "différencions" des cours "maquette", "formations", "à la carte", etc... Pour chacun de ces types une catégorie de cours où ranger ces cours était spécifiée par défaut.D'autres actions spéficiques à un type peuvent également être mises en place mais ne seront pas présentées dans ce plugin.
 
 En adaptant quelques peu le plugin, cette sélection peut être supprimée pour que le formulaire ne serve qu'à créer des cours classiques dans n'importe quelle catégorie de cours.
 
@@ -158,7 +158,7 @@ function get_course_types()
 
 La nouvelle version du plugin modifie quelques peu cette fonction <i>get_course_types()</i> pour apporter davantage de flexibilité en déportant une partie de la logique dans le fichier de configuration. <br/><br/>
 Ainsi vous pourrez définir directement au niveau de la variable $CFG->static_types (cf. doc config.php du dessus) la valeur de la catégorie de cours liée et l'icône à afficher pour chaque type. Un booléen <i>in_form</i> a également été ajouté pour indiquer si le type doit être utilisé dans le formulaire ou non.<br/>
-Au niveau de la fonction le traitement sera plus automatisé et vous n'aurez en fait qu'à adapter le fichier de configuration en fonction du besoin (les urls seront cela toujours à modifier au niveau du fichier lib.php en cas de changement dans la structure de votre projet moodle).
+Au niveau de la fonction le traitement sera plus automatisé et vous n'aurez en fait qu'à adapter le fichier de configuration en fonction du besoin (les urls seront cependant toujours à modifier au niveau du fichier lib.php en cas de changement dans la structure de votre projet moodle).
 ```php
 
 <?php
@@ -185,7 +185,7 @@ function get_course_types()
 Pour adapter le plugin
 ------
 
-* En utilisant les types de cours
+* En utilisant les types de cours:
 1. Définir les différents types de cours dans le fichier <i>config.php</i>, choisir les catégories de cours et les éventuelles icônes correspondantes à chaque type.
 2. Définir l'identifiant de la catégorie de cours où créer vos cours par défault dans le fichier <i>config.php</i>.
 3. Ajouter les différentes traductions correspondantes à ces types de cours.

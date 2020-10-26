@@ -1,47 +1,47 @@
-Moodle UCA - Formulaire de création de cours simplifié
+Moodle UCA - Course creation simplfied form
 ==================================
-Projet ayant pour but d'avoir un formulaire de création de cours simplifié permettant aux utilisateurs de ne saisir que les informations principales.
+Plugin project to create a course with a simplified form where users only enter main informations about the course.
 
-Pré-requis
+Requirements
 ------------
-- Moodle en version 3.2 ou plus récente.<br/>
--> Tests effectués sur des versions 3.2 à 3.9 et avec une installation basique de moodle (certains ajustements seront peut-être nécessaires en cas d'utilisation de plugins additionnels, notamment pour les formats de cours).
-- Thème qui supporte bootstrap.
+- Moodle 3.2 or later.<br/>
+-> Tests on Moodle 3.3 to 3.9 versions and with a basic moodle installation (some adjustements may be needed if you use some additionnal plugins espacially course formats plugins).
+- Bootstrap support in your moodle theme.
 
-Installation basique
+Installation
 ------------
-1. Installation du plugin
+1. Local plugin installation
 
-- Avec git:
+- Git way:
 > git clone https://github.com/andurif/moodle-local_uca_create_courses.git local/uca_create_courses
 
-- En téléchargement:
-> Télécharger le zip depuis <a href="https://github.com/andurif/moodle-local_uca_create_courses/archive/master.zip">https://github.com/andurif/moodle-local_uca_create_courses/archive/master.zip</a>, dézipper l'archive dans le dossier local/ et renommer le si besoin le dossier en "uca_create_courses".
+- Download way:
+> Download the zip from <a href="https://github.com/andurif/moodle-local_uca_create_courses/archive/master.zip">https://github.com/andurif/moodle-local_uca_create_courses/archive/master.zip</a>, unzip it in local/ folder and rename it "uca_create_courses" if necessary.
 
-Vous pouvez bien sur changer le dossier dans lequel déposer le projet ou le nom du projet lui-même mais ces changements seront à reporter dans le code du plugin (notamment les urls).
+You can change the plugin folder or project name but these changes must be report in the plugin code (especially urls calls).
 
-2. Aller sur la page de Notifications pour terminer l'installation du plugin.
+2. Then visit your Admin Notifications page to complete the installation.
 
-3. Pour l'affichage de l'arbre des catégories présent dans le formulaire nous avons été obligé de modifier quelques éléments du code du core de Moodle dans le fichier course/renderer.php. (Point à améliorer car les modifications peuvent être à refaire en cas de mise à jour de Moodle).<br/>
-(Risque d'avoir ce type de message d'erreur sinon "Erreur de programmation détectée. Ceci doit être corrigé par un programmeur : Unknown method called against theme_boost\output\core\course_renderer :: coursecat_tree").
+3. To have a good display of the course categories tree we had to update some core Moodle functions in the course/renderer.php file (This is an improvement to do because this action may be needed after every Moodle update).<br/>
+(Risk to have an error "Coding error detected, it must be fixed by a programmer : Unknown method called against theme_boost\output\core\course_renderer :: coursecat_tree").
   
- * +/- l.1580: faire passer la fonction coursecat_tree() en public<br/><br/>
+ * +/- l.1670: change function coursecat_tree() visibility to public<br/><br/>
   ```php
   <?php
  protected function coursecat_tree(coursecat_helper $chelper, $coursecat) { ... }
  
- //A remplacer par 
+ // To be replaced by 
  
  public function coursecat_tree(coursecat_helper $chelper, $coursecat) { ... }
   ```
   
-* +/- l. 1767 et 1771: limite passée à null au lieu de $CFG->courseperpage dans la fonction coursecat_ajax().<br/>
-    Si besoin on peut aussi déclarer $CFG->courseperpage = null dans le fichier de config mais cela agira de manière globale sur le moodle (les liens "voir plus" et "voir moins" pour les catégories de cours ne seront du coup plus visibles).<br/><br/>
-    <i>* les numéros de lignes indiqués pour les changements sont variables en fonction de la version utilisée.</i>
+* +/- l. 1857 et 1862: change limit to null rather than $CFG->courseperpage in the coursecat_ajax() function.<br/>
+    You may declare $CFG->courseperpage = null in the config.php file but this change will be used globally in moodle (links "view more" and "view less" for the course categories will not be visible).<br/><br/>
+    <i>* line numbers shown here may be different in function of your moodle version.</i>
     
 ```php
   <?php
-    //contenu de la fonction coursecat_ajax()...
+    // content of the coursecat_ajax() function...
     $coursedisplayoptions = array(
         'limit' => $CFG->coursesperpage,
         'viewmoreurl' => new moodle_url($baseurl, array('browse' => 'courses', 'page' => 1))
@@ -51,9 +51,9 @@ Vous pouvez bien sur changer le dossier dans lequel déposer le projet ou le nom
         'viewmoreurl' => new moodle_url($baseurl, array('browse' => 'categories', 'page' => 1))
     );
  
-    //A remplacer par 
+    // To be replaced by  
  
-    //contenu de la fonction coursecat_ajax()...
+    // content of the coursecat_ajax() function...
     $coursedisplayoptions = array(
         'limit' => null,
         'viewmoreurl' => new moodle_url($baseurl, array('browse' => 'courses', 'page' => 1))
@@ -64,30 +64,30 @@ Vous pouvez bien sur changer le dossier dans lequel déposer le projet ou le nom
     );
   ```
 
-Présentation / Utilisation
+Presentation / Usages
 ------
 
-Le but de ce plugin est de permettre aux utilisateurs de créer rapidement un cours sans s'occuper des nombreuses options disponibles dans le formulaire de base de Moodle.<br/>
+This plugin aim is to let users create easily a course without use all given options in the Moodle form.<br/>
 
-Notre idée étant de choisir en premier lien un type de cours à créer. Par exemple, dans notre cas nous "différencions" des cours "maquette", "formations", "à la carte", etc... Pour chacun de ces types une catégorie de cours où ranger ces cours était spécifiée par défaut.D'autres actions spéficiques à un type peuvent également être mises en place mais ne seront pas présentées dans ce plugin.
+Our idea was to first choose a type for the course to create. For example, in our case we separate "program", "formation", "optionnal" courses... For each type a course category is defined to put by default these new courses. Other specific actions to a type can be implemented but not seen in this plugin.
 
-En adaptant quelques peu le plugin, cette sélection peut être supprimée pour que le formulaire ne serve qu'à créer des cours classiques dans n'importe quelle catégorie de cours.
+This selection can be removed by adjusting the plugin code. The form will only create classic courses in any course category.
 
-#### `Dossier js/`
+#### `js/ folder`
 
-Contient un fichier javascript permettant l'interaction entre les différents éléments du formulaire.
+It contents a javascript file where form interactions are defined.
 
-#### `Dossier lang/`
+#### `lang/ folder`
 
-Dossier spécifique à un plugin Moodle dans lequel on retrouve les traductions.
+Specific folder with translation files.
 
-#### `Dossier templates/`
+#### `templates/ folder`
 
-Contient un template mustache présentant l'écran intermédiaire permettant de choisir le type de cours que l'on souhaite créer.
+It contents a mustache template which display the form part where the user choose the type of the course to create.
 
 #### `config.php`
 
-Fichier de configuration dans lequel on va définir les catégories de cours relatives à chaque type:
+Configuration file where course categories for each type are defined:
 ```php
 <?php
 
@@ -98,7 +98,7 @@ $CFG->static_coursecat_id = array(
     'etc..' => $x,
 );
 
-// ! Nouveauté version 2018101000 !
+// ! New version 2018101000 !
 $CFG->static_types = array(
     'type1'     => array('default_category_id' => 1, 'icon' => null, 'in_form' => false),
     'type2'     => array('default_category_id' => $id_category_1, 'icon' => 'group', 'in_form' => true),
@@ -107,30 +107,30 @@ $CFG->static_types = array(
 );
 
 ```
-Attention, pour chaque type définit il faudra également ajouter une traduction dans les fichiers du dossier lang/.
+Be careful each type defined in the configuration file also need a translation in the files of the lang/ folder.
 ```php
 <?php
 
-$string['choice_type_type1'] = 'Libellé du type de cours type1';
+$string['choice_type_type1'] = 'Label type1 course';
 ```
 
-#### `create.php et simplecreate.php` 
+#### `create.php and simplecreate.php` 
 
-Fichiers php où seront traités le formulaire et les informations saisies en prenant en compte le type de cours (create.php) ou non (simplecreate.php).
+Php files where form datas are processed in function of the selected type (create.php) or not (simplecreate.php). 
 
 #### `creation_form.php`
 
-Classe php correspondant au formulaire moodle crée.
-C'est dans ce fichier qu'il faudra si besoin ajouter les champs supplémentaires que vous voudrez faire afficher.
+Php class corresponding to the moodle form.
+It is in this file you need if necessary to display additionnal fields.
 
 #### `lib.php`
 
-Fichier regroupant les différentes fonctions utiles au fonctionnement du plugin.
-Il existe dans ce fichier une fonction <i>get_course_types()</i> qui servira à construire l'écran listant les types de cours. 
-Il vous faudra modifier cette fonction pour faire afficher vos types de cours spécifiques. Pour chaque type vous devrez renseigner:
- * name : libellé de votre type (généralement la traduction),
- * url : lien de la page où se trouve le formulaire (cela revient à donner votre type en paramètres de l'url. => Ex: array('type' => 'type1') ) 
- * icon : icône qui sera affichée sur le bouton (utilisation des icones de <a href="https://material.io/tools/icons/?style=baseline" target="_blank" >material design</a>).
+Php file with plugin needed functions.  
+A function named <i>get_course_types()</i> will construct the page which display course types. 
+You need to update this function to display your specific course types. For each type you need to indicate:
+ * name : name of the course type (or translation),
+ * url : page link to find the form (give the url params. => Ex: array('type' => 'type1') ) 
+ * icon : displayed icon on the button (using <a href="https://material.io/tools/icons/?style=baseline" target="_blank" >material design</a> icons).
 ```php
 
 <?php
@@ -154,11 +154,11 @@ function get_course_types()
 }
 ```
 
-<i><b>! Nouveauté version 2018101000 !</b></i>
+<i><b>! New version 2018101000 !</b></i>
 
-La nouvelle version du plugin modifie quelques peu cette fonction <i>get_course_types()</i> pour apporter davantage de flexibilité en déportant une partie de la logique dans le fichier de configuration. <br/><br/>
-Ainsi vous pourrez définir directement au niveau de la variable $CFG->static_types (cf. doc config.php du dessus) la valeur de la catégorie de cours liée et l'icône à afficher pour chaque type. Un booléen <i>in_form</i> a également été ajouté pour indiquer si le type doit être utilisé dans le formulaire ou non.<br/>
-Au niveau de la fonction le traitement sera plus automatisé et vous n'aurez en fait qu'à adapter le fichier de configuration en fonction du besoin (les urls seront cela toujours à modifier au niveau du fichier lib.php en cas de changement dans la structure de votre projet moodle).
+The newest plugin version upgrade the <i>get_course_types()</i> function to add more flexibility by using a the configuration file. <br/><br/>
+You can directy define with the $CFG->static_types var (cf. doc config.php above) the value of the linked course category and the displayed icon for each type. A boolean <i>in_form</i> is also use to determine if this type has to be displayed in the form.<br/>
+In this function the process will be more automatic and you will only have to adapt this configuration file (however urls will have to be updated in the lib.php file if there are changes in the structure of your moodle project).
 ```php
 
 <?php
@@ -182,22 +182,22 @@ function get_course_types()
 }
 ```
 
-Pour adapter le plugin
+Adapt the plugin
 ------
 
-* En utilisant les types de cours
-1. Définir les différents types de cours dans le fichier <i>config.php</i>, choisir les catégories de cours et les éventuelles icônes correspondantes à chaque type.
-2. Définir l'identifiant de la catégorie de cours où créer vos cours par défault dans le fichier <i>config.php</i>.
-3. Ajouter les différentes traductions correspondantes à ces types de cours.
-4. Adapter la fonction <i>get_course_types()</i> du fichier <i>lib.php</i> (Optionnel avec la version 2018101000).
-5. Modifier le fichier <i>create.php</i> si vous souhaitez ajouter des actions, des tests, etc... en fonction du type choisi (Optionnel).
-6. <strong>Accéder au formulaire via l'url <a href="#">monmoodle.fr/local/uca_create_courses/create.php</a> pour visualiser le formulaire.</strong>
+* With course types:
+1. Define all the course types in the <i>config.php</i> file, choose course categories and icons corresponding to each type.
+2. Define in the <i>config.php</i> file course category ids where course will be created by default. 
+3. Add these course types' translations. 
+4. Adapt the <i>get_course_types()</i> function of the <i>lib.php</i> file (Optionnal with the 2018101000 version).
+5. Update the <i>create.php</i> file if you want to add some actions, tests, etc... in function of the selected type (Optionnal).
+6. <strong>Access to the form: <a href="#">mymoodle.com/local/uca_create_courses/create.php</a>.</strong>
 
 
-* Sans utiliser les types de cours:
-1. Définir l'identifiant de la catégorie de cours où créer vos cours par défault dans le fichier <i>config.php</i>.
-2. <strong>Accéder au formulaire directement via l'url <a href="#">monmoodle.fr/local/uca_create_courses/simplecreate.php</a> pour visualiser le formulaire.</strong>
+* Without course types:
+1. Define in the <i>config.php</i> file course category ids where course will be created by default.
+2. <strong>Access to the form: <a href="#">monmoodle.fr/local/uca_create_courses/simplecreate.php</a>.</strong>
 
-A propos
+About us
 ------
 <a href="https://www.uca.fr">Université Clermont Auvergne</a> - 2018

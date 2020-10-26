@@ -23,7 +23,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Custom course cration form';
+$string['pluginname'] = 'Custom course creation form';
 $string['choice_type_collab'] = 'Collaborative course';
 $string['choice_type_carte'] = 'Optionnal <br/>course';
 $string['choice_type_forco'] = 'ForCo <br/>course';
