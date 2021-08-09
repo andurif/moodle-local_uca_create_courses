@@ -32,12 +32,12 @@ function get_default_category_form($type = null)
 {
     global $CFG;
 
-    //We search the category which corresponds to the given type
-    if(in_array($type, array_keys($CFG->static_types)) ) {
+    // We search the category which corresponds to the given type.
+    if (in_array($type, array_keys($CFG->static_types)) ) {
         return core_course_category::get($CFG->static_types[$type]['default_category_id']);
     }
 
-    //By default we return the category with the id added in config (most of the time 1, the automatically created category)
+    // By default we return the category with the id added in config (most of the time 1, the automatically created category).
     return core_course_category::get($CFG->default_category);
 }
 
@@ -51,7 +51,7 @@ function categories_list($renderer, $category)
 {
     $chelper = new coursecat_helper();
 
-    // Prepare parameters for courses and categories lists in the tree
+    // Prepare parameters for courses and categories lists in the tree.
     $chelper->set_show_courses($renderer::COURSECAT_SHOW_COURSES_COUNT)
         ->set_attributes(array('class' => 'category-browse category-browse-'.$category))
         ->set_categories_display_options(array('visible' => true));
@@ -67,12 +67,12 @@ function categories_list($renderer, $category)
  */
 function get_course_types()
 {
-    //In this example we the array defined in the config.php file
+    // In this example we the array defined in the config.php file.
     global $CFG;
     $tabl = [];
 
     foreach ($CFG->static_types as $key => $type) {
-        if($type['in_form']) {
+        if ($type['in_form']) {
             $tabl[] = [
                 'name'  => get_string('choice_type_' . $key, 'local_uca_create_courses'),
                 'url'   => new moodle_url('/local/uca_create_courses/create.php', array('type' => $key)),

@@ -5,7 +5,7 @@ Plugin project to create a course with a simplified form where users only enter 
 Requirements
 ------------
 - Moodle 3.2 or later.<br/>
--> Tests on Moodle 3.3 to 3.9 versions and with a basic moodle installation (some adjustements may be needed if you use some additionnal plugins espacially course formats plugins).
+-> Tests on Moodle 3.3 to 3.11.0 versions and with a basic moodle installation (some adjustements may be needed if you use some additionnal plugins espacially course formats plugins).
 - Bootstrap support in your moodle theme.
 
 Installation
@@ -16,7 +16,7 @@ Installation
 > git clone https://github.com/andurif/moodle-local_uca_create_courses.git local/uca_create_courses
 
 - Download way:
-> Download the zip from <a href="https://github.com/andurif/moodle-local_uca_create_courses/archive/master.zip">https://github.com/andurif/moodle-local_uca_create_courses/archive/master.zip</a>, unzip it in local/ folder and rename it "uca_create_courses" if necessary.
+> Download the zip from <a href="https://github.com/andurif/moodle-local_uca_create_courses/archive/refs/heads/master.zip">https://github.com/andurif/moodle-local_uca_create_courses/archive/refs/heads/master.zip</a>, unzip it in local/ folder and rename it "uca_create_courses" if necessary.
 
 You can change the plugin folder or project name but these changes must be report in the plugin code (especially urls calls).
 
@@ -35,7 +35,7 @@ You can change the plugin folder or project name but these changes must be repor
  public function coursecat_tree(coursecat_helper $chelper, $coursecat) { ... }
   ```
   
-* +/- l. 1857 et 1862: change limit to null rather than $CFG->courseperpage in the coursecat_ajax() function.<br/>
+* +/- l. 1862 et 1866: change limit to null rather than $CFG->courseperpage in the coursecat_ajax() function.<br/>
     You may declare $CFG->courseperpage = null in the config.php file but this change will be used globally in moodle (links "view more" and "view less" for the course categories will not be visible).<br/><br/>
     <i>* line numbers shown here may be different in function of your moodle version.</i>
     
@@ -154,9 +154,7 @@ function get_course_types()
 }
 ```
 
-<i><b>! New version 2018101000 !</b></i>
-
-The newest plugin version upgrade the <i>get_course_types()</i> function to add more flexibility by using a the configuration file. <br/><br/>
+The last plugin version upgrades the <i>get_course_types()</i> function to add more flexibility by using a the configuration file. <br/><br/>
 You can directy define with the $CFG->static_types var (cf. doc config.php above) the value of the linked course category and the displayed icon for each type. A boolean <i>in_form</i> is also use to determine if this type has to be displayed in the form.<br/>
 In this function the process will be more automatic and you will only have to adapt this configuration file (however urls will have to be updated in the lib.php file if there are changes in the structure of your moodle project).
 ```php
@@ -200,4 +198,4 @@ Adapt the plugin
 
 About us
 ------
-<a href="https://www.uca.fr">Université Clermont Auvergne</a> - 2018
+<a href="https://www.uca.fr">Université Clermont Auvergne</a> - 2021

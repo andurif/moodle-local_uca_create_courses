@@ -5,7 +5,7 @@ Projet ayant pour but d'avoir un formulaire de création de cours simplifié per
 Pré-requis
 ------------
 - Moodle en version 3.2 ou plus récente.<br/>
--> Tests effectués sur des versions 3.2 à 3.9 et avec une installation basique de moodle (certains ajustements seront peut-être nécessaires en cas d'utilisation de plugins additionnels, notamment pour les formats de cours).
+-> Tests effectués sur des versions 3.2 à 3.11.0 et avec une installation basique de moodle (certains ajustements seront peut-être nécessaires en cas d'utilisation de plugins additionnels, notamment pour les formats de cours).
 - Thème qui supporte bootstrap.
 
 Installation basique
@@ -16,7 +16,7 @@ Installation basique
 > git clone https://github.com/andurif/moodle-local_uca_create_courses.git local/uca_create_courses
 
 - En téléchargement:
-> Télécharger le zip depuis <a href="https://github.com/andurif/moodle-local_uca_create_courses/archive/master.zip">https://github.com/andurif/moodle-local_uca_create_courses/archive/master.zip</a>, dézipper l'archive dans le dossier local/ et renommer le si besoin le dossier en "uca_create_courses".
+> Télécharger le zip depuis <a href="https://github.com/andurif/moodle-local_uca_create_courses/archive/refs/heads/master.zip">https://github.com/andurif/moodle-local_uca_create_courses/archive/refs/heads/master.zip</a>, dézipper l'archive dans le dossier local/ et renommer le si besoin le dossier en "uca_create_courses".
 
 Vous pouvez bien sur changer le dossier dans lequel déposer le projet ou le nom du projet lui-même mais ces changements seront à reporter dans le code du plugin (notamment les urls).
 
@@ -35,7 +35,7 @@ Vous pouvez bien sur changer le dossier dans lequel déposer le projet ou le nom
  public function coursecat_tree(coursecat_helper $chelper, $coursecat) { ... }
   ```
   
-* +/- l. 1857 et 1862: limite passée à null au lieu de $CFG->courseperpage dans la fonction coursecat_ajax().<br/>
+* +/- l. 1862 et 1866: limite passée à null au lieu de $CFG->courseperpage dans la fonction coursecat_ajax().<br/>
     Si besoin on peut aussi déclarer $CFG->courseperpage = null dans le fichier de config mais cela agira de manière globale sur le moodle (les liens "voir plus" et "voir moins" pour les catégories de cours ne seront du coup plus visibles).<br/><br/>
     <i>* les numéros de lignes indiqués pour les changements sont variables en fonction de la version utilisée.</i>
     
@@ -154,9 +154,7 @@ function get_course_types()
 }
 ```
 
-<i><b>! Nouveauté version 2018101000 !</b></i>
-
-La nouvelle version du plugin modifie quelques peu cette fonction <i>get_course_types()</i> pour apporter davantage de flexibilité en déportant une partie de la logique dans le fichier de configuration. <br/><br/>
+La version la plus récente du plugin modifie quelques peu cette fonction <i>get_course_types()</i> pour apporter davantage de flexibilité en déportant une partie de la logique dans le fichier de configuration. <br/><br/>
 Ainsi vous pourrez définir directement au niveau de la variable $CFG->static_types (cf. doc config.php du dessus) la valeur de la catégorie de cours liée et l'icône à afficher pour chaque type. Un booléen <i>in_form</i> a également été ajouté pour indiquer si le type doit être utilisé dans le formulaire ou non.<br/>
 Au niveau de la fonction le traitement sera plus automatisé et vous n'aurez en fait qu'à adapter le fichier de configuration en fonction du besoin (les urls seront cependant toujours à modifier au niveau du fichier lib.php en cas de changement dans la structure de votre projet moodle).
 ```php
@@ -200,4 +198,4 @@ Pour adapter le plugin
 
 A propos
 ------
-<a href="https://www.uca.fr">Université Clermont Auvergne</a> - 2018
+<a href="https://www.uca.fr">Université Clermont Auvergne</a> - 2021
